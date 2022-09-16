@@ -1,0 +1,15 @@
+*.log
+node_modules
+package-lock.json
+.DS_Store
+.idea
+.vscode
+.cache
+.env
+publication/**
+temporary-errors-zip
+**/files
+**/.deploy-transformed/**
+.setup-var.sh
+*.gz
+*.xml
