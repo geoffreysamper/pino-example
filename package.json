@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "pino": "^8.4.2",
+    "pino-pretty": "^9.1.1",
+    "rotating-file-stream": "^3.0.4",
     "yargs": "^17.5.1"
   }
 }

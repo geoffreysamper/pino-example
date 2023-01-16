@@ -1,14 +1,5 @@
 import yargs from 'yargs/yargs'
-
-let args = yargs(process.argv).argv;
-console.log(args)
-
-if (args.console){
-    import('./plain-console.mjs')
-}
-else {
-    import('./pino.mjs')
-}
-
+import rfs from 'rotating-file-stream'
+import('./pino.mjs')
 
 //

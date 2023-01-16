@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    # the prefix before the logs should be the name of the container
+   
+  name: pino-example
+  labels:
+    app: pino
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pino
+  template:
+    metadata:
+     annotations:
+      ad.datadoghq.com/pino-container.logs: |
+        [{
+            "type": "file",
+            "path": "/log-store/pino.log",
+            "source": "pino",
+            "service": "pino-example"
+        }]   
+     labels:
+        app: pino
+    spec:
+     securityContext:
+      runAsUser: 1000
+      runAsGroup: 3000
+      fsGroup: 2000
+     initContainers:
+      - name: init
+        image: busybox:1.28
+        command: ['sh', '-c', 'touch /log-store/pino.log && chmod o+rx -R /log-store/pino.log ']
+        volumeMounts:
+          - mountPath: /log-store
+            name: log-store
+     containers:
+      - name: pino-container
+        image: docker.io/geoffreysamper/pino-example:latest
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /log-store
+            name: log-store
+        envFrom:
+          - configMapRef:
+              name: pino-example
+     volumes:
+        - name: log-store
+          emptyDir: {}

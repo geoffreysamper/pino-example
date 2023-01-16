@@ -1,0 +1,5 @@
+namespace: pino-example
+resources:
+- deployment.yaml
+- configmap.yaml
+- namespace.yaml
